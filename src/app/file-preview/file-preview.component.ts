@@ -19,24 +19,15 @@ export class FilePreviewComponent {
     this.isImage = false;
     this.fileSrc = '';
     if (this.data.file) {
-      console.log(this.data);
       this.getFileMimeType(this.data.file)
         .then((mimeType: string) => {
+          const reader = new FileReader();
+          reader.onload = (event: any) => {
+            this.fileSrc = event.target.result;
+          };
+          reader.readAsDataURL(this.data.file);
           if (mimeType.startsWith('image/')) {
             this.isImage = true;
-            const reader = new FileReader();
-            reader.onload = (event: any) => {
-              this.fileSrc = event.target.result;
-            };
-            reader.readAsDataURL(this.data.file);
-          } else if (mimeType === 'application/pdf') {
-            if (typeof FileReader !== 'undefined') {
-              let reader = new FileReader();
-              reader.onload = (e: any) => {
-                this.fileSrc = e.target.result;
-              };
-              reader.readAsArrayBuffer(this.data.file);
-            }
           }
         })
         .catch((error) =>
