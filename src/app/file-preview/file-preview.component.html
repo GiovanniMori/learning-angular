@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Documento</h1>
+<div mat-dialog-content>
+  <ng-container *ngIf="isImage; else pdfViewer">
+    <img [src]="fileSrc" alt="Preview" />
+  </ng-container>
+  <ng-template #pdfViewer>
+    <pdf-viewer
+      [src]="fileSrc"
+      [original-size]="false"
+      style="width: 400px; height: 500px"
+    ></pdf-viewer>
+  </ng-template>
+</div>
