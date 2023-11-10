@@ -19,6 +19,7 @@ export class FilePreviewComponent {
     this.isImage = false;
     this.fileSrc = '';
     if (this.data.file) {
+      console.log(this.data);
       this.getFileMimeType(this.data.file)
         .then((mimeType: string) => {
           if (mimeType.startsWith('image/')) {
@@ -29,13 +30,12 @@ export class FilePreviewComponent {
             };
             reader.readAsDataURL(this.data.file);
           } else if (mimeType === 'application/pdf') {
-            let $img: any = document.querySelector('#file');
             if (typeof FileReader !== 'undefined') {
               let reader = new FileReader();
               reader.onload = (e: any) => {
                 this.fileSrc = e.target.result;
               };
-              reader.readAsArrayBuffer($img.files[0]);
+              reader.readAsArrayBuffer(this.data.file);
             }
           }
         })
