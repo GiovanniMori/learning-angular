@@ -25,6 +25,11 @@ export class AppComponent {
   }
   openDialog() {
     this.dialog.open(FilePreviewComponent, {
+      enterAnimationDuration: 300,
+      exitAnimationDuration: 300,
+      width: '80vw',
+      height: '80vh',
+      panelClass: 'file-preview-dialog',
       data: {
         file: this.file,
       },

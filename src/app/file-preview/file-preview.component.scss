@@ -1,0 +1,36 @@
+nav {
+  display: flex;
+  position: relative;
+  padding: 0 1rem;
+  align-items: center;
+  background-color: #f8f8f8;
+  border: 1px solid #e7e7e7;
+  gap: 1rem;
+  overflow: hidden;
+  span {
+    position: absolute;
+    left: 0;
+    font-size: 2rem;
+    width: auto;
+    font-weight: 500;
+    margin-inline-start: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  div {
+    color: orange;
+    align-items: center;
+    display: flex;
+    gap: 4px;
+    margin: auto;
+  }
+}
+img {
+  object-fit: contain;
+}
+mat-dialog-content {
+  display: flex;
+  width: 100%;
+  overflow: auto;
+}

@@ -1,24 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { PDFDocumentProxy, PdfViewerModule } from 'ng2-pdf-viewer';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { FilePreview } from './file-preview';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   templateUrl: './file-preview.component.html',
   styleUrl: './file-preview.component.scss',
   standalone: true,
-  imports: [PdfViewerModule, CommonModule, MatDialogModule],
+  imports: [PdfViewerModule, CommonModule, MatDialogModule, FormsModule],
 })
 export class FilePreviewComponent {
   @Input() file: File;
   isImage: boolean = false;
   fileSrc: string;
+  totalPages: number;
+  fileName: string;
+  page: number = 1;
+  zoom: number = 1;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: FilePreview) {
     this.isImage = false;
     this.fileSrc = '';
+    this.fileName = '';
     if (this.data.file) {
+      this.fileName = this.data.file.name;
       this.getFileMimeType(this.data.file)
         .then((mimeType: string) => {
           const reader = new FileReader();
@@ -66,5 +73,18 @@ export class FilePreviewComponent {
 
       reader.readAsArrayBuffer(file.slice(0, 4));
     });
+  }
+  onPDFLoad(pdf: PDFDocumentProxy) {
+    this.totalPages = pdf.numPages;
+  }
+
+  increaseZoom() {
+    this.zoom += 0.25;
+  }
+
+  decreaseZoom() {
+    if (this.zoom > 0.25) {
+      this.zoom -= 0.25;
+    }
   }
 }

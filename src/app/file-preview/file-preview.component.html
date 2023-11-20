@@ -1,13 +1,41 @@
-<h1 mat-dialog-title>Documento</h1>
-<div mat-dialog-content>
+<nav role="navigation">
+  <span>{{ fileName }}</span>
+  <ng-container *ngIf="'true'">
+    <!-- <input type="text" [(ngModel)]="page" /> / {{ totalPages }} -->
+    <div>
+      <button (click)="decreaseZoom()">-</button>
+      <div>{{ zoom * 100 }}%</div>
+      <button (click)="increaseZoom()">+</button>
+    </div>
+  </ng-container>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</nav>
+<mat-dialog-content>
   <ng-container *ngIf="isImage; else pdfViewer">
-    <img [src]="fileSrc" alt="Preview" />
+    <img
+      [src]="fileSrc"
+      alt="Preview"
+      style="min-width: 200px; min-height: 200px; width: 100%"
+    />
   </ng-container>
   <ng-template #pdfViewer>
+    <!--
+      TODO: setPage
+      [(page)]="page"
+      (after-load-complete)="onPDFLoad($event)"
+      [show-all]="false"
+    -->
     <pdf-viewer
       [src]="fileSrc"
+      [show-all]="true"
+      [render-text]="true"
+      style="min-width: 200px; min-height: 200px; width: 100%"
+      [external-link-target]="'blank'"
       [original-size]="false"
-      style="width: 400px; height: 500px"
-    ></pdf-viewer>
+      [zoom-scale]="'page-width'"
+      [(zoom)]="zoom"
+    />
   </ng-template>
-</div>
+</mat-dialog-content>
